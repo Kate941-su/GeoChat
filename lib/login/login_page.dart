@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../colors/constant.dart';
+import '../constant/colors/constant.dart';
 import '../gen/assets.gen.dart';
 
 class LoginPage extends HookConsumerWidget {

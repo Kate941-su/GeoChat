@@ -36,6 +36,9 @@ dependencies:
   riverpod_annotation: ^2.3.0
   auto_size_text: ^3.0.0
 
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: "assets/images/splash.png"
 
 dev_dependencies:
   flutter_test:
@@ -48,7 +51,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/icons/logo_geochat.png"
+  image_path: "assets/images/logo_geochat.png"
 
 flutter_gen:
   output: lib/gen/
