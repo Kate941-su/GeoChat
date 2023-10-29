@@ -3,6 +3,8 @@ import 'package:flutter_training/login/login_page.dart';
 import 'package:flutter_training/page_state/page_state_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'chat_page.dart';
+
 void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
@@ -20,10 +22,10 @@ class MyApp extends HookConsumerWidget {
             splash: () => null,
             login:  () => null,
             main: () => AppBar(title:const Placeholder(),),
-            chat:  () => AppBar(title:const Placeholder(),)),
-        body: LoginPage(),
+            chat: ()=> AppBar(title:const Placeholder())),
+        // body: LoginPage(),
         // body: MainPage(),
-        // body: ChatPage(),
+        body: ChatPage(),
         // body: SplashPage(),
       ),
     );

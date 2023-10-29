@@ -33,10 +33,27 @@ class $AssetsImagesGen {
       [appleLogo, googleLogo, logoGeochat, placeHolder];
 }
 
+class $AssetsMockGen {
+  const $AssetsMockGen();
+
+  $AssetsMockJsonGen get json => const $AssetsMockJsonGen();
+}
+
+class $AssetsMockJsonGen {
+  const $AssetsMockJsonGen();
+
+  /// File path: assets/mock/json/messages.json
+  String get messages => 'assets/mock/json/messages.json';
+
+  /// List of all assets
+  List<String> get values => [messages];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsMockGen mock = $AssetsMockGen();
 }
 
 class AssetGenImage {
