@@ -3,7 +3,7 @@ import 'package:flutter_training/login/login_page.dart';
 import 'package:flutter_training/page_state/page_state_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'chat_page.dart';
+import 'chat/chat_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));

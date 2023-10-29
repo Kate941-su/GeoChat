@@ -3,7 +3,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'messages_provider.g.dart';
 
-
 // After implementing as all correct,
 @riverpod
 class Messages extends _$Messages {
@@ -13,7 +12,7 @@ class Messages extends _$Messages {
   }
 
   void addMessage(types.Message message) {
-    state = [...state, message];
+    state = [message, ...state];
   }
 
   void updateMessage(types.Message message, index) {
