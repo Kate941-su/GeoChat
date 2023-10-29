@@ -12,11 +12,25 @@ final router = GoRouter(
         builder: (context, state) => const Scaffold(body: LoginPage())),
     GoRoute(
         path: '/login',
-        builder: (context, state) => const Scaffold(body: LoginPage())),
+        builder: (context, state) => Scaffold(
+              body: const LoginPage(),
+              floatingActionButton: FloatingActionButton(
+                child: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  context.go('/main');
+                },
+              ),
+            )),
     GoRoute(
       path: '/main',
       builder: (context, state) => Scaffold(
           body: const MainPage(),
+          floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.arrow_back),
+            onPressed: () {
+              context.go('/login');
+            },
+          ),
           bottomNavigationBar: BottomNavigationBar(
             items: [
               BottomNavigationBarItem(
@@ -39,6 +53,12 @@ final router = GoRouter(
         builder: (context, state) => Scaffold(
               appBar: AppBar(),
               body: const ChatPage(),
+              floatingActionButton: FloatingActionButton(
+                child: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  context.go('/main');
+                },
+              ),
             ))
   ],
 );

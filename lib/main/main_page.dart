@@ -5,6 +5,7 @@ import 'package:flutter_training/constant/colors/constant.dart';
 import 'package:flutter_training/dev_util/const_value.dart';
 import 'package:flutter_training/page_state/page_state.dart';
 import 'package:flutter_training/page_state/page_state_provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../page_state/page_state.dart';
 import '../page_state/page_state_provider.dart';
@@ -58,53 +59,58 @@ class CustomListTile extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ListTile(
-      leading: SizedBox(
-        width: 70,
-        height: 70,
-        child: Stack(children: [
-          Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(image: Assets.images.avatar.provider())),
-          ),
-          Visibility(
-            visible: isOnline,
-            child: Positioned(
-              right: 0,
-              bottom: 0,
-              child: Assets.images.onlineIcon.image(),
+    return InkWell(
+      onTap: (){
+        context.go('/chat');
+      },
+      child: ListTile(
+        leading: SizedBox(
+          width: 70,
+          height: 70,
+          child: Stack(children: [
+            Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(image: Assets.images.avatar.provider())),
             ),
-          )
-        ]),
-      ),
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            width: 120,
-            child: AutoSizeText(
-              userName,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+            Visibility(
+              visible: isOnline,
+              child: Positioned(
+                right: 0,
+                bottom: 0,
+                child: Assets.images.onlineIcon.image(),
+              ),
+            )
+          ]),
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 120,
+              child: AutoSizeText(
+                userName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          Text(dateStringGenerator(dateTime))
-        ],
-      ),
-      subtitle: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            width: 160,
-            child: AutoSizeText(
-              latestChat,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            Text(dateStringGenerator(dateTime))
+          ],
+        ),
+        subtitle: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 160,
+              child: AutoSizeText(
+                latestChat,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-          ),
-          NotificationCountIcon(notificationCount: notificationCount),
-        ],
+            NotificationCountIcon(notificationCount: notificationCount),
+          ],
+        ),
       ),
     );
   }
