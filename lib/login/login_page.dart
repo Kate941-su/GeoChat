@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../constant/colors/constant.dart';
 import '../gen/assets.gen.dart';
+import '../page_state/page_state.dart';
+import '../page_state/page_state_provider.dart';
 
 class LoginPage extends HookConsumerWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    useEffect(() {
+      // ref
+      //     .read(pageStateNotifierProvider.notifier)
+      //     .setPageState(nextState: const PageState.login());
+    }, []);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -33,17 +42,20 @@ class LoginPage extends HookConsumerWidget {
           title: 'Sign In Apple',
           imagePath: Assets.images.appleLogo.path,
         ),
+        if (const String.fromEnvironment('FLAVOR') == 'development')
+          TextButton(
+            onPressed: () {
+              context.go('/main');
+            },
+            child: const Text('Go main'),
+          ),
       ],
     );
   }
 }
 
 class LoginButton extends ConsumerWidget {
-  const LoginButton({
-    super.key,
-    required this.title,
-    required this.imagePath
-  });
+  const LoginButton({super.key, required this.title, required this.imagePath});
 
   final String title;
   final String imagePath;
@@ -57,24 +69,21 @@ class LoginButton extends ConsumerWidget {
           width: 320,
           height: 60,
           decoration: BoxDecoration(
-            color: colorLoginButton,
-            borderRadius: const BorderRadius.all(Radius.circular(8.0))
-          ),
+              color: colorLoginButton,
+              borderRadius: const BorderRadius.all(Radius.circular(8.0))),
           child: ListTile(
             leading: Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Image.asset(imagePath),
             ),
-            title: Text(title,
-            style: const TextStyle(
-              fontSize: 20,
-              color: Colors.white
-            ),
+            title: Text(
+              title,
+              style: const TextStyle(fontSize: 20, color: Colors.white),
             ),
             trailing: const Icon(Icons.arrow_forward_ios_outlined),
           ),
         ),
-        onTap: (){
+        onTap: () {
           debugPrint('WIP : Implement $title');
         },
       ),

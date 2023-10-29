@@ -1,8 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_training/constant/colors/constant.dart';
 import 'package:flutter_training/dev_util/const_value.dart';
+import 'package:flutter_training/page_state/page_state.dart';
+import 'package:flutter_training/page_state/page_state_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../page_state/page_state.dart';
+import '../page_state/page_state_provider.dart';
 
 import '../gen/assets.gen.dart';
 
@@ -20,6 +25,11 @@ class MainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    useEffect(() {
+      // ref
+      //     .read(pageStateNotifierProvider.notifier)
+      //     .setPageState(nextState: const PageState.main());
+    }, []);
     return ListView.builder(
         itemCount: mockedListViewList.length,
         itemBuilder: (BuildContext context, int index) {

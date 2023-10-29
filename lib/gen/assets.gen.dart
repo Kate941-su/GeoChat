@@ -46,9 +46,19 @@ class $AssetsImagesGen {
   AssetGenImage get placeHolder =>
       const AssetGenImage('assets/images/place_holder.png');
 
+  /// File path: assets/images/splash.png
+  AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
+
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [appleLogo, avatar, googleLogo, logoGeochat, onlineIcon, placeHolder];
+  List<AssetGenImage> get values => [
+        appleLogo,
+        avatar,
+        googleLogo,
+        logoGeochat,
+        onlineIcon,
+        placeHolder,
+        splash
+      ];
 }
 
 class $AssetsMockGen {
