@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_training/login/login_page.dart';
+import 'package:flutter_training/main/main_page.dart';
 import 'package:flutter_training/page_state/page_state_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -8,6 +8,7 @@ import 'chat/chat_page.dart';
 void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
+
 class MyApp extends HookConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -18,14 +19,30 @@ class MyApp extends HookConsumerWidget {
       title: 'Instagram Clone',
       theme: ThemeData.light(),
       home: Scaffold(
-        appBar: pageState.when(
-            splash: () => null,
-            login:  () => null,
-            main: () => AppBar(title:const Placeholder(),),
-            chat: ()=> AppBar(title:const Placeholder())),
+        appBar: pageState.whenOrNull(
+            // main: () => AppBar(
+            //   title:const Placeholder(),),
+            ),
         // body: LoginPage(),
         // body: MainPage(),
-        body: ChatPage(),
+        body: MainPage(),
+        bottomNavigationBar: pageState.whenOrNull(
+            main: () => BottomNavigationBar(
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.chat_bubble),
+                      label: 'Chats',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.people_alt),
+                      label: 'Follows',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.settings),
+                      label: 'Settings',
+                    ),
+                  ],
+                )),
         // body: SplashPage(),
       ),
     );

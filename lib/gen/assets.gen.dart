@@ -9,12 +9,26 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsIconsGen {
+  const $AssetsIconsGen();
+
+  /// File path: assets/icons/logo_geochat.png
+  AssetGenImage get logoGeochat =>
+      const AssetGenImage('assets/icons/logo_geochat.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [logoGeochat];
+}
+
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
   /// File path: assets/images/apple_logo.png
   AssetGenImage get appleLogo =>
       const AssetGenImage('assets/images/apple_logo.png');
+
+  /// File path: assets/images/avatar.png
+  AssetGenImage get avatar => const AssetGenImage('assets/images/avatar.png');
 
   /// File path: assets/images/google_logo.png
   AssetGenImage get googleLogo =>
@@ -24,13 +38,17 @@ class $AssetsImagesGen {
   AssetGenImage get logoGeochat =>
       const AssetGenImage('assets/images/logo_geochat.png');
 
+  /// File path: assets/images/onlineIcon.png
+  AssetGenImage get onlineIcon =>
+      const AssetGenImage('assets/images/onlineIcon.png');
+
   /// File path: assets/images/place_holder.png
   AssetGenImage get placeHolder =>
       const AssetGenImage('assets/images/place_holder.png');
 
   /// List of all assets
   List<AssetGenImage> get values =>
-      [appleLogo, googleLogo, logoGeochat, placeHolder];
+      [appleLogo, avatar, googleLogo, logoGeochat, onlineIcon, placeHolder];
 }
 
 class $AssetsMockGen {
@@ -52,6 +70,7 @@ class $AssetsMockJsonGen {
 class Assets {
   Assets._();
 
+  static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsMockGen mock = $AssetsMockGen();
 }
