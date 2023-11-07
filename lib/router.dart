@@ -4,12 +4,19 @@ import 'package:go_router/go_router.dart';
 import 'chat/chat_page.dart';
 import 'login/login_page.dart';
 import 'main/main_page.dart';
+import 'chat/debug_chat_page.dart';
+import 'chat/debug_chat_entry_page.dart';
 
 final router = GoRouter(
   routes: [
+    // Debug Page
     GoRoute(
         path: '/',
-        builder: (context, state) => const Scaffold(body: LoginPage())),
+        builder: (context, state) => const DebugChatEntryPage()),
+        // builder: (context, state) => const Scaffold(body: LoginPage())),
+    GoRoute(
+        path: '/debug_chat',
+        builder: (context, state) => const DebugChatPage()),
     GoRoute(
         path: '/login',
         builder: (context, state) => Scaffold(
@@ -32,7 +39,7 @@ final router = GoRouter(
             },
           ),
           bottomNavigationBar: BottomNavigationBar(
-            items: [
+            items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.chat_bubble),
                 label: 'Chats',
