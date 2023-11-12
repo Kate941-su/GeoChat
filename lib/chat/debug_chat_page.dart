@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../Types/types.dart';
@@ -13,33 +14,6 @@ import '../message/debug_message.dart';
 
 // I have to determine Uri as local IP (not working as localhost:3000)
 const _mockedHttpUri = 'http://192.168.1.26:3000';
-
-List<MessageWidget> _mockedMessage = [
-  const MessageWidget(
-      userName: 'user 1',
-      message: 'user 1 sent message !',
-      messageType: MessageUserType.ownMsg),
-  const MessageWidget(
-      userName: 'user 1',
-      message: 'user 1 sent message !',
-      messageType: MessageUserType.ownMsg),
-  const MessageWidget(
-      userName: 'user 1',
-      message: 'user 1 sent message !',
-      messageType: MessageUserType.ownMsg),
-  const MessageWidget(
-      userName: 'user 1',
-      message: 'user 1 sent message !',
-      messageType: MessageUserType.ownMsg),
-  const MessageWidget(
-      userName: 'user 1',
-      message: 'user 1 sent message !',
-      messageType: MessageUserType.otherMsg),
-  const MessageWidget(
-      userName: 'user 1',
-      message: 'user 1 sent message !',
-      messageType: MessageUserType.otherMsg),
-];
 
 class DebugChatPage extends HookConsumerWidget {
   DebugChatPage({super.key});
@@ -64,9 +38,17 @@ class DebugChatPage extends HookConsumerWidget {
         type: MessageUserType.ownMsg.messageTypeName,
         message: message,
         sender: sender);
-    ref.read(debugMessagesProvider.notifier).addMessage(msg);
     socket.emit(EmitEventType.sendMsg.eventName,
         {'type': 'ownMsg', 'msg': msg.message, 'sender': sender});
+  }
+
+  List<MessageWidget> makeMessageWidget(
+      {required List<DebugMessage> debugMessages}) {
+    List<MessageWidget> retList = [];
+    for (var it in debugMessages) {
+      retList.add(MessageWidget(message: it));
+    }
+    return retList;
   }
 
   @override
@@ -85,16 +67,17 @@ class DebugChatPage extends HookConsumerWidget {
         socket.on('sendMsgServer', (msg) {
           ref.read(debugMessagesProvider.notifier).addMessage(DebugMessage(
               type: msg['type'], message: msg['msg'], sender: msg['sender']));
-          debugPrint(
-              'type : ${msg['type']}, message : ${msg['msg']}, sender : ${msg['sender']}');
         });
       });
+      /**
+       * if socket emit some errors, this coll back function will coll.
+       * */
       socket.onConnectError((connectionError) {
         debugPrint(connectionError.toString());
       });
       socket.onError((error) {});
       return socket.dispose;
-    }, [_mockedMessage.length]);
+    }, []);
 
     return Scaffold(
         appBar: AppBar(
@@ -113,7 +96,7 @@ class DebugChatPage extends HookConsumerWidget {
             Expanded(
               child: Container(
                 child: ListView(
-                  children: _mockedMessage,
+                  children: makeMessageWidget(debugMessages: debugMessages),
                 ),
               ),
             ),
@@ -135,9 +118,13 @@ class DebugChatPage extends HookConsumerWidget {
                         final text = textEditingController.value.text;
                         if (text.isNotEmpty) {
                           sendMessage(
-                              message: textEditingController.value.text,
-                              sender: userName.name,
-                              ref: ref);
+                              message: text, sender: userName.name, ref: ref);
+                          ref.watch(debugMessagesProvider.notifier).addMessage(
+                              DebugMessage(
+                                  type: MessageUserType.ownMsg.messageTypeName,
+                                  message: text,
+                                  sender: userName.name));
+                          print(debugMessages);
                           textEditingController.clear();
                         }
                       },

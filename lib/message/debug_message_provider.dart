@@ -12,7 +12,8 @@ class DebugMessages extends _$DebugMessages {
   }
 
   void addMessage(DebugMessage message) {
-    state = [message, ...state];
+    state = [...state, message];
+    print(state);
   }
 
   void updateMessage(DebugMessage message, index) {

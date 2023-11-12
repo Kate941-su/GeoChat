@@ -1,31 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_training/message/debug_message.dart';
 
 import '../../Types/types.dart';
 
 class MessageWidget extends ConsumerWidget {
-  const MessageWidget(
-      {required this.userName,
-      required this.message,
-      required this.messageType,
-      super.key});
+  const MessageWidget({required this.message, super.key});
 
-  final String userName;
-  final String message;
-  final MessageUserType messageType;
+  final DebugMessage message;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      alignment: messageType == MessageUserType.ownMsg
+      alignment: message.type == MessageUserType.ownMsg.messageTypeName
           ? Alignment.centerRight
           : Alignment.centerLeft,
       padding: const EdgeInsets.all(8),
       child: Column(
-        crossAxisAlignment: messageType == MessageUserType.ownMsg
-            ? CrossAxisAlignment.end
-            : CrossAxisAlignment.start,
-        children: [Text(userName), Text(message)],
+        crossAxisAlignment:
+            message.type == MessageUserType.ownMsg.messageTypeName
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
+        children: [Text(message.sender), Text(message.message)],
       ),
     );
   }
