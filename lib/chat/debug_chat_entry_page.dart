@@ -44,7 +44,7 @@ class DebugChatEntryPage extends HookConsumerWidget {
                     actions: [
                       TextButton(
                           onPressed: () {
-                            debugPrint(nameController.text);
+                            debugPrint('You entered as ${nameController.text}');
                             if (nameController.text.isNotEmpty) {
                               ref.read(userProvider.notifier).state =
                                   User(name: nameController.text);
