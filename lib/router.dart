@@ -16,7 +16,7 @@ final router = GoRouter(
         // builder: (context, state) => const Scaffold(body: LoginPage())),
     GoRoute(
         path: '/debug_chat',
-        builder: (context, state) => const DebugChatPage()),
+        builder: (context, state) => DebugChatPage()),
     GoRoute(
         path: '/login',
         builder: (context, state) => Scaffold(
