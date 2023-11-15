@@ -23,6 +23,7 @@ jobs:
 
           RELEASE_NOTE=$(echo $BODY_VALUE|grep 'RELEASE_NOTE_ACTIONS : '| sed -n 's/.*RELEASE_NOTE_ACTIONS : \[\(.*\)\].*/\1/p')
           export RELEASE_NOTE
+          echo "$RELEASE_NOTE"
 
       - name: release trigger
         run: |
