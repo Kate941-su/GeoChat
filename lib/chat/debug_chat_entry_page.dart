@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_training/user/user_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 import '../user/user.dart';
 
@@ -47,7 +48,7 @@ class DebugChatEntryPage extends HookConsumerWidget {
                             debugPrint('You entered as ${nameController.text}');
                             if (nameController.text.isNotEmpty) {
                               ref.read(userProvider.notifier).state =
-                                  User(name: nameController.text);
+                                  User(name: nameController.text, uuid: const Uuid().v1());
                               context.go('/debug_chat');
                             }
                           },
