@@ -26,7 +26,7 @@ jobs:
 
       - name: release trigger
         run: |
-          if [ ! -n "$RELEASE_NOTE" ]; then
+          if [ -n "$RELEASE_NOTE" ]; then
             echo "$RELEASE_NOTE"
           else
             echo "THIS IS NOT RELEASE NOTE"
