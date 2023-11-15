@@ -28,4 +28,6 @@ jobs:
         run: |
           if [ ! -n "RELEASE_NOTE" ]; then
             echo "SUCCEEDED TO GET RELEASE NOTE FROM COMMENT"
+          else
+            echo "THIS IS NOT RELEASE NOTE"
           fi
