@@ -2,7 +2,9 @@ name: Test Field
 
 #on: issue_comment
 on:
-  push: main
+  push:
+    branches:
+      - main
 
 
 jobs:
