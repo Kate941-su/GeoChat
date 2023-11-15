@@ -7,6 +7,7 @@ jobs:
   build:
     runs-on: [ self-hosted, macOS ] # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idruns-on
     timeout-minutes: 45
+    if: github.event.issue.pull_request.head.ref == 'main'
 
     steps:
       - uses: actions/checkout@v3
