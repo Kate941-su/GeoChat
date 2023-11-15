@@ -18,8 +18,8 @@ jobs:
           ISSUE_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN{FS="/"} {print $NF}') # Get Issue Number
           COMMENTS=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
                       "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments") # Get Issue Comment
-          echo "$ISSUE_NUMBER"
-          echo "$COMMENTS"
+          echo "ISSUE NUMBER : $ISSUE_NUMBER"
+          echo "COMMENT : $COMMENTS"
 
       - name: Display Pull Request Comments
         run: |
