@@ -20,9 +20,9 @@ jobs:
           JSON_DATA=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
                       "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments") # Get Body From Github API
           BODY_VALUE=$(echo "$JSON_DATA" | jq -r '.[-1].body')
-          DUMMY=$(echo $BODY_VALUE|grep RELEASE_NOTE_ACTIONS)
-          RELEASE_NOTE=$(echo $BODY_VALUE|grep 'RELEASE_NOTE_ACTIONS : '| sed -n 's/.*RELEASE_NOTE_ACTIONS : \[\(.*\)\].*/\1/p')
-          export $RELEASE_NOTE
+
+#          RELEASE_NOTE=$(echo $BODY_VALUE|grep 'RELEASE_NOTE_ACTIONS : '| sed -n 's/.*RELEASE_NOTE_ACTIONS : \[\(.*\)\].*/\1/p')
+#          export $RELEASE_NOTE
 
       - name: release trigger
         run: |
