@@ -1,0 +1,26 @@
+name: Test Field
+
+on: issue_comment
+
+jobs:
+  build:
+    runs-on: [ self-hosted, macOS ] # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idruns-on
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Show MacOS version
+        run: sw_vers
+
+      - name: Get Pull Request Comments
+        id: comments
+        run: |
+          ISSUE_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN{FS="/"} {print $NF}') # Get Issue Number
+          COMMENTS=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+                      "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments") # Get Issue Comment
+          echo "$ISSUE_NUMBER"
+          echo "$COMMENTS"
+
+      - name: Display Pull Request Comments
+        run: |
+          echo "Pull Request Comments: ${{ steps.comments.outputs.comments }}"
