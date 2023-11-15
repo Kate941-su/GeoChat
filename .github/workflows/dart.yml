@@ -22,7 +22,7 @@ jobs:
           BODY_VALUE=$(echo "$JSON_DATA" | jq -r '.[-1].body')
 
           
-          echo "RELEASE_NOTE=$(echo $BODY_VALUE|grep 'RELEASE_NOTE_ACTIONS : '| sed -n 's/.*RELEASE_NOTE_ACTIONS : \[\(.*\)\].*/\1/p') >> $GITHUB_ENV"
+          echo "RELEASE_NOTE=$(echo $BODY_VALUE|grep 'RELEASE_NOTE_ACTIONS : '| sed -n 's/.*RELEASE_NOTE_ACTIONS : \[\(.*\)\].*/\1/p')" >> $GITHUB_ENV
 
       - name: release trigger
         run: |
