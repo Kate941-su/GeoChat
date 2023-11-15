@@ -1,6 +1,9 @@
 name: Test Field
 
-on: issue_comment
+#on: issue_comment
+on:
+  push: main
+
 
 jobs:
   build:
@@ -16,10 +19,10 @@ jobs:
         id: comments
         run: |
           ISSUE_NUMBER=${{ github.event.issue.number }}
-          COMMENTS=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-                      "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments") # Get Issue Comment
-          echo "ISSUE NUMBER : $ISSUE_NUMBER"
-          echo "COMMENT : $COMMENTS"
+          JSON_DATA=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+                      "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments") # Get Body From Github API
+          BODY_VALUE=$(echo "$JSON_DATA" | jq -r '.[].body')
+          echo "LAST COMMENT : $BODY_VALUE"
 
       - name: Display Pull Request Comments
         run: |
