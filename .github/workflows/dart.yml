@@ -1,11 +1,7 @@
 name: Test Field
 
 #on: issue_comment
-on:
-  push:
-    branches:
-      - main
-
+on: issue_comment
 
 jobs:
   build:
