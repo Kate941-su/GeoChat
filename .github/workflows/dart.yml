@@ -23,7 +23,7 @@ jobs:
           ISSUE_NUMBER=${{ github.event.issue.number }}
           JSON_DATA=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
                       "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments") # Get Body From Github API
-          BODY_VALUE=$(echo "$JSON_DATA" | jq -r '.[0]')
+          BODY_VALUE=$(echo "$JSON_DATA" | jq -r '.')
           echo "LAST COMMENT : $BODY_VALUE"
 
       - name: Display Pull Request Comments
