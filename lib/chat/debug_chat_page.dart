@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_training/message/messages_provider.dart';
+import 'package:uuid/uuid.dart';
 import '../Types/types.dart';
 import 'widget/message_widget.dart';
 import 'package:flutter_training/message/debug_message_provider.dart';
@@ -30,18 +31,6 @@ class DebugChatPage extends HookConsumerWidget {
     socket.connect();
   }
 
-  void sendMessage(
-      {required String message,
-      required String sender,
-      required WidgetRef ref}) {
-    final msg = DebugMessage(
-        type: MessageUserType.ownMsg.messageTypeName,
-        message: message,
-        sender: sender);
-    socket.emit(EmitEventType.sendMsg.eventName,
-        {'type': 'ownMsg', 'msg': msg.message, 'sender': sender});
-  }
-
   List<MessageWidget> makeMessageWidget(
       {required List<DebugMessage> debugMessages}) {
     List<MessageWidget> retList = [];
@@ -53,7 +42,8 @@ class DebugChatPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userName = ref.watch(userProvider);
+    final userName = ref.watch(userProvider.select((it) => it.name));
+    final userId = ref.watch(userProvider.select((it) => it.uuid));
     final textEditingController = useTextEditingController();
     final debugMessages = ref.watch(debugMessagesProvider);
     useEffect(() {
@@ -64,9 +54,18 @@ class DebugChatPage extends HookConsumerWidget {
          * @param {String} sendMsgServer
          * @param {() => null}  - Listening from server(keyword : sendMsgServer)"
          */
-        socket.on('sendMsgServer', (msg) {
-          ref.read(debugMessagesProvider.notifier).addMessage(DebugMessage(
-              type: msg['type'], message: msg['msg'], sender: msg['sender']));
+        socket.on(userName, (message) {
+          final formattedMessage = DebugMessage(type: message['type'],
+              roomId: message['roomId'],
+              messageId: message['messageId'],
+              messageText: message['messageText'],
+              senderUserId: message['senderUserId'],
+              sendDateTime: message['sendDateTime']);
+          debugPrint(formattedMessage.toString());
+          if (userId != formattedMessage.senderUserId) {
+            ref.read(debugMessagesProvider.notifier).addMessage(formattedMessage);
+          }
+
         });
       });
       /**
@@ -94,10 +93,8 @@ class DebugChatPage extends HookConsumerWidget {
         body: Column(
           children: [
             Expanded(
-              child: Container(
-                child: ListView(
-                  children: makeMessageWidget(debugMessages: debugMessages),
-                ),
+              child: ListView(
+                children: makeMessageWidget(debugMessages: debugMessages),
               ),
             ),
             Padding(
@@ -117,14 +114,22 @@ class DebugChatPage extends HookConsumerWidget {
                       onPressed: () {
                         final text = textEditingController.value.text;
                         if (text.isNotEmpty) {
-                          sendMessage(
-                              message: text, sender: userName.name, ref: ref);
-                          ref.watch(debugMessagesProvider.notifier).addMessage(
-                              DebugMessage(
-                                  type: MessageUserType.ownMsg.messageTypeName,
-                                  message: text,
-                                  sender: userName.name));
-                          print(debugMessages);
+                          final msg = DebugMessage(
+                              type: MessageUserType.ownMsg.messageTypeName,
+                              messageText: text,
+                              senderUserId: userId,
+                              sendDateTime: DateTime
+                                  .now()
+                                  .millisecondsSinceEpoch
+                                  .toString(),
+                              roomId: userName,
+                              messageId: const Uuid().v4());
+                          ref
+                              .read(debugMessagesProvider.notifier)
+                              .sendMessage(message: msg, socket: socket);
+                          ref
+                              .watch(debugMessagesProvider.notifier)
+                              .addMessage(msg);
                           textEditingController.clear();
                         }
                       },

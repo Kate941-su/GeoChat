@@ -1,3 +1,4 @@
+import '../Types/types.dart';
 import 'debug_message.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -13,7 +14,6 @@ class DebugMessages extends _$DebugMessages {
 
   void addMessage(DebugMessage message) {
     state = [...state, message];
-    print(state);
   }
 
   void updateMessage(DebugMessage message, index) {
@@ -25,5 +25,8 @@ class DebugMessages extends _$DebugMessages {
   void loadMessage(List<DebugMessage> messageList) {
     state = messageList;
   }
-}
 
+  void sendMessage({required DebugMessage message, required socket}) {
+    socket.emit(EmitEventType.sendMsg.eventName, message.toJson());
+  }
+}

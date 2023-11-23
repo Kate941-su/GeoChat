@@ -59,7 +59,7 @@ final router = GoRouter(
         path: '/chat',
         builder: (context, state) => Scaffold(
               appBar: AppBar(),
-              body: const ChatPage(),
+              body: ChatPage(),
               floatingActionButton: FloatingActionButton(
                 child: const Icon(Icons.arrow_back),
                 onPressed: () {

@@ -24,14 +24,14 @@ class MessageWidget extends ConsumerWidget {
                 : CrossAxisAlignment.start,
         children: [
           Text(
-            message.sender,
+            message.senderUserId,
             style: TextStyle(
                 color: message.type == MessageUserType.ownMsg.messageTypeName
                     ? Colors.red
                     : Colors.blue,
                 fontWeight: FontWeight.bold),
           ),
-          Text(message.message)
+          Text(message.messageText)
         ],
       ),
     );

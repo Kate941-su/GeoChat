@@ -22,20 +22,52 @@ import '../message/messages_provider.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../page_state/page_state.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+const _mockedHttpUri = 'http://192.168.1.26:3000';
 
 class ChatPage extends HookConsumerWidget {
-  const ChatPage({super.key});
+  ChatPage({super.key});
+
+  late final IO.Socket socket;
 
   final _user = const types.User(
     id: '82091008-a484-4a89-ae75-a22bf8d6f3ac',
   );
 
+  void connect() {
+    socket = IO.io(
+        _mockedHttpUri,
+        IO.OptionBuilder()
+            .setTransports(['websocket'])
+            .disableAutoConnect()
+            .build());
+    socket.connect();
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
-      // ref.read(pageStateNotifierProvider.notifier).setPageState(nextState: const PageState.chat());
+      connect();
+      socket.onConnect((data) {
+        debugPrint('Connected to backend server!');
+        /**
+         * @param {String} sendMsgServer
+         * @param {() => null}  - Listening from server(keyword : sendMsgServer)"
+         */
+        socket.on('sendMsgServer', (msg) {
+          debugPrint('$msg sent correctly.');
+        });
+      });
+      /**
+       * if socket emit some errors, this coll back function will coll.
+       * */
+      socket.onConnectError((connectionError) {
+        debugPrint(connectionError.toString());
+      });
+      socket.onError((error) {});
       _loadMessages(ref);
-      return null;
+      return socket.dispose;
     }, []);
     final messages = ref.watch(messagesProvider);
     return Chat(
@@ -149,7 +181,8 @@ class ChatPage extends HookConsumerWidget {
         try {
           final index = ref.read(messagesProvider.notifier).findIndex(message);
           final updatedMessage =
-              (ref.watch(messagesProvider)[index] as types.FileMessage).copyWith(
+              (ref.watch(messagesProvider)[index] as types.FileMessage)
+                  .copyWith(
             isLoading: true,
           );
           ref
@@ -167,10 +200,10 @@ class ChatPage extends HookConsumerWidget {
             await file.writeAsBytes(bytes);
           }
         } finally {
-          final index =
-          ref.read(messagesProvider.notifier).findIndex(message);
+          final index = ref.read(messagesProvider.notifier).findIndex(message);
           final updatedMessage =
-              (ref.watch(messagesProvider)[index] as types.FileMessage).copyWith(
+              (ref.watch(messagesProvider)[index] as types.FileMessage)
+                  .copyWith(
             isLoading: null,
           );
 
@@ -187,7 +220,8 @@ class ChatPage extends HookConsumerWidget {
   void _handlePreviewDataFetched(
       types.TextMessage message, types.PreviewData previewData, WidgetRef ref) {
     final index = ref.read(messagesProvider.notifier).findIndex(message);
-    final updatedMessage = (ref.watch(messagesProvider)[index] as types.TextMessage).copyWith(
+    final updatedMessage =
+        (ref.watch(messagesProvider)[index] as types.TextMessage).copyWith(
       previewData: previewData,
     );
 
@@ -203,6 +237,9 @@ class ChatPage extends HookConsumerWidget {
     );
 
     ref.read(messagesProvider.notifier).addMessage(textMessage);
+    ref
+        .read(messagesProvider.notifier)
+        .sendTextMessage(message: message, socket: socket);
   }
 
   void _loadMessages(WidgetRef ref) async {

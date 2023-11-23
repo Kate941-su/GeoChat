@@ -6,7 +6,7 @@ part of 'debug_message_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$debugMessagesHash() => r'5030882297e6fdbc774575d4d9f0802e913bde06';
+String _$debugMessagesHash() => r'f74ecb1fa2a9b96500bfbad594bfb9d3276286ca';
 
 /// See also [DebugMessages].
 @ProviderFor(DebugMessages)

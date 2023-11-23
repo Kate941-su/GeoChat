@@ -14,13 +14,20 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+DebugMessage _$DebugMessageFromJson(Map<String, dynamic> json) {
+  return _DebugMessage.fromJson(json);
+}
+
 /// @nodoc
 mixin _$DebugMessage {
   String get type => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
-  String get sender => throw _privateConstructorUsedError;
-  bool get isMarried => throw _privateConstructorUsedError;
+  String get roomId => throw _privateConstructorUsedError;
+  String get messageId => throw _privateConstructorUsedError;
+  String get messageText => throw _privateConstructorUsedError;
+  String get senderUserId => throw _privateConstructorUsedError;
+  String get sendDateTime => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $DebugMessageCopyWith<DebugMessage> get copyWith =>
       throw _privateConstructorUsedError;
@@ -32,7 +39,13 @@ abstract class $DebugMessageCopyWith<$Res> {
           DebugMessage value, $Res Function(DebugMessage) then) =
       _$DebugMessageCopyWithImpl<$Res, DebugMessage>;
   @useResult
-  $Res call({String type, String message, String sender, bool isMarried});
+  $Res call(
+      {String type,
+      String roomId,
+      String messageId,
+      String messageText,
+      String senderUserId,
+      String sendDateTime});
 }
 
 /// @nodoc
@@ -49,27 +62,37 @@ class _$DebugMessageCopyWithImpl<$Res, $Val extends DebugMessage>
   @override
   $Res call({
     Object? type = null,
-    Object? message = null,
-    Object? sender = null,
-    Object? isMarried = null,
+    Object? roomId = null,
+    Object? messageId = null,
+    Object? messageText = null,
+    Object? senderUserId = null,
+    Object? sendDateTime = null,
   }) {
     return _then(_value.copyWith(
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
+      roomId: null == roomId
+          ? _value.roomId
+          : roomId // ignore: cast_nullable_to_non_nullable
               as String,
-      sender: null == sender
-          ? _value.sender
-          : sender // ignore: cast_nullable_to_non_nullable
+      messageId: null == messageId
+          ? _value.messageId
+          : messageId // ignore: cast_nullable_to_non_nullable
               as String,
-      isMarried: null == isMarried
-          ? _value.isMarried
-          : isMarried // ignore: cast_nullable_to_non_nullable
-              as bool,
+      messageText: null == messageText
+          ? _value.messageText
+          : messageText // ignore: cast_nullable_to_non_nullable
+              as String,
+      senderUserId: null == senderUserId
+          ? _value.senderUserId
+          : senderUserId // ignore: cast_nullable_to_non_nullable
+              as String,
+      sendDateTime: null == sendDateTime
+          ? _value.sendDateTime
+          : sendDateTime // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -82,7 +105,13 @@ abstract class _$$DebugMessageImplCopyWith<$Res>
       __$$DebugMessageImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String type, String message, String sender, bool isMarried});
+  $Res call(
+      {String type,
+      String roomId,
+      String messageId,
+      String messageText,
+      String senderUserId,
+      String sendDateTime});
 }
 
 /// @nodoc
@@ -97,53 +126,71 @@ class __$$DebugMessageImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? type = null,
-    Object? message = null,
-    Object? sender = null,
-    Object? isMarried = null,
+    Object? roomId = null,
+    Object? messageId = null,
+    Object? messageText = null,
+    Object? senderUserId = null,
+    Object? sendDateTime = null,
   }) {
     return _then(_$DebugMessageImpl(
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
+      roomId: null == roomId
+          ? _value.roomId
+          : roomId // ignore: cast_nullable_to_non_nullable
               as String,
-      sender: null == sender
-          ? _value.sender
-          : sender // ignore: cast_nullable_to_non_nullable
+      messageId: null == messageId
+          ? _value.messageId
+          : messageId // ignore: cast_nullable_to_non_nullable
               as String,
-      isMarried: null == isMarried
-          ? _value.isMarried
-          : isMarried // ignore: cast_nullable_to_non_nullable
-              as bool,
+      messageText: null == messageText
+          ? _value.messageText
+          : messageText // ignore: cast_nullable_to_non_nullable
+              as String,
+      senderUserId: null == senderUserId
+          ? _value.senderUserId
+          : senderUserId // ignore: cast_nullable_to_non_nullable
+              as String,
+      sendDateTime: null == sendDateTime
+          ? _value.sendDateTime
+          : sendDateTime // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$DebugMessageImpl implements _DebugMessage {
   _$DebugMessageImpl(
       {required this.type,
-      required this.message,
-      required this.sender,
-      this.isMarried = false});
+      required this.roomId,
+      required this.messageId,
+      required this.messageText,
+      required this.senderUserId,
+      required this.sendDateTime});
+
+  factory _$DebugMessageImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DebugMessageImplFromJson(json);
 
   @override
   final String type;
   @override
-  final String message;
+  final String roomId;
   @override
-  final String sender;
+  final String messageId;
   @override
-  @JsonKey()
-  final bool isMarried;
+  final String messageText;
+  @override
+  final String senderUserId;
+  @override
+  final String sendDateTime;
 
   @override
   String toString() {
-    return 'DebugMessage(type: $type, message: $message, sender: $sender, isMarried: $isMarried)';
+    return 'DebugMessage(type: $type, roomId: $roomId, messageId: $messageId, messageText: $messageText, senderUserId: $senderUserId, sendDateTime: $sendDateTime)';
   }
 
   @override
@@ -152,38 +199,60 @@ class _$DebugMessageImpl implements _DebugMessage {
         (other.runtimeType == runtimeType &&
             other is _$DebugMessageImpl &&
             (identical(other.type, type) || other.type == type) &&
-            (identical(other.message, message) || other.message == message) &&
-            (identical(other.sender, sender) || other.sender == sender) &&
-            (identical(other.isMarried, isMarried) ||
-                other.isMarried == isMarried));
+            (identical(other.roomId, roomId) || other.roomId == roomId) &&
+            (identical(other.messageId, messageId) ||
+                other.messageId == messageId) &&
+            (identical(other.messageText, messageText) ||
+                other.messageText == messageText) &&
+            (identical(other.senderUserId, senderUserId) ||
+                other.senderUserId == senderUserId) &&
+            (identical(other.sendDateTime, sendDateTime) ||
+                other.sendDateTime == sendDateTime));
   }
 
+  @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, type, message, sender, isMarried);
+  int get hashCode => Object.hash(runtimeType, type, roomId, messageId,
+      messageText, senderUserId, sendDateTime);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$DebugMessageImplCopyWith<_$DebugMessageImpl> get copyWith =>
       __$$DebugMessageImplCopyWithImpl<_$DebugMessageImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$DebugMessageImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _DebugMessage implements DebugMessage {
   factory _DebugMessage(
       {required final String type,
-      required final String message,
-      required final String sender,
-      final bool isMarried}) = _$DebugMessageImpl;
+      required final String roomId,
+      required final String messageId,
+      required final String messageText,
+      required final String senderUserId,
+      required final String sendDateTime}) = _$DebugMessageImpl;
+
+  factory _DebugMessage.fromJson(Map<String, dynamic> json) =
+      _$DebugMessageImpl.fromJson;
 
   @override
   String get type;
   @override
-  String get message;
+  String get roomId;
   @override
-  String get sender;
+  String get messageId;
   @override
-  bool get isMarried;
+  String get messageText;
+  @override
+  String get senderUserId;
+  @override
+  String get sendDateTime;
   @override
   @JsonKey(ignore: true)
   _$$DebugMessageImplCopyWith<_$DebugMessageImpl> get copyWith =>
